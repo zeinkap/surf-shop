@@ -6,4 +6,7 @@
 
 # Created routes for index, posts and reviews
 
+# Created models for post, reviews and user
+
+
 
