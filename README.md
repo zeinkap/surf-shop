@@ -8,5 +8,9 @@
 
 # Created models for post, reviews and user
 
+# Setup and configured passport
 
+# Connected to MongoDB
+
+# Added header and footer ejs files in partials directory
 
