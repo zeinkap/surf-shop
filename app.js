@@ -7,6 +7,7 @@ const bodyParser              = require('body-parser');
 const passport                = require('passport');
 const passportLocalMongoose   = require('passport-local-mongoose');
 const session                 = require('express-session');
+const flash                   = require('connect-flash');
 const mongoose                = require('mongoose');
 
 // Models
@@ -20,7 +21,7 @@ const reviewsRouter           = require('./routes/reviews');
 const app = express();
 
 //connecting to DB
-mongoose.connect('mongodb://localhost:27017/surf-shop', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
+mongoose.connect('mongodb://localhost:27017/surf_shop', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
   .then(() => console.log('DB Connected!'))
   .catch(err => {
     console.log(`DB Connection Error: ${err.message}`);
@@ -34,6 +35,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Configure Sessions and Passport (*Order is very important here!)
@@ -43,6 +45,9 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }));
+// Configure passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
 passport.use(User.createStrategy());
  

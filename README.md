@@ -14,3 +14,6 @@
 
 # Added header and footer ejs files in partials directory
 
+# Refactored postRegister function to be async and added global errorHandler
+
+# Added login/logout routes
