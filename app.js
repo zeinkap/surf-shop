@@ -9,6 +9,7 @@ const passportLocalMongoose   = require('passport-local-mongoose');
 const session                 = require('express-session');
 const flash                   = require('connect-flash');
 const mongoose                = require('mongoose');
+const methodOverride          = require('method-override');
 
 // Models
 const User                    = require('./models/user');
@@ -33,10 +34,11 @@ app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(methodOverride('_method'));
 
 // Configure Sessions and Passport (*Order is very important here!)
 app.set('trust proxy', 1) // trust first proxy

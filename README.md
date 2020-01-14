@@ -4,7 +4,7 @@
 
 # Created database design on trello
 
-# Created routes for index, posts and reviews
+# Setup routes for index, posts and reviews
 
 # Created models for post, reviews and user
 
@@ -17,3 +17,5 @@
 # Refactored postRegister function to be async and added global errorHandler
 
 # Added login/logout routes
+
+# Updated routes for posts and renamed routes to follow RESTful approach
