@@ -6,10 +6,9 @@ const PostSchema = new Schema({
     title: String,
     price: String,
     description: String,
-    images: [ String ],
+    images: [{ url: String, public_id: String }],   //url is coming from cloudinary and id is so we can edit/delete the images
     location: String,
-    lat: Number,
-    lng: Number,
+    coordinates: Array,
     author: {
         type: Schema.Types.ObjectId,
         ref: 'User'

@@ -5,7 +5,7 @@ const { asyncErrorHandler } = require('../middleware');
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-  res.render('index', { title: 'Surf Shop - Home' });
+  res.render('index');
 });
 
 /* GET /register */

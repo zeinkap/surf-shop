@@ -19,3 +19,17 @@
 # Added login/logout routes
 
 # Updated routes for posts and renamed routes to follow RESTful approach
+
+# Added geolocation feature using Mapbox API
+
+# Update Post Model and Controller
+
+# Update Posts show view
+
+# Uploading images 
+* Create cloudinary account (or use existing)
+* Install cloudinary and multer
+* Cloudinary used to store images in cloud, and multer used to deal with multi form data and add additional images
+* Configure multer for upload in routes file (maybe add image filter)
+* Require and confiure cloudinary (api key, secret, etc)
+* Update Post route

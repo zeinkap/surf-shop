@@ -1,5 +1,7 @@
-const createError             = require('http-errors');
+require('dotenv').config();
+
 const express                 = require('express');
+const createError             = require('http-errors');
 const path                    = require('path');
 const logger                  = require('morgan');
 const cookieParser            = require('cookie-parser');
@@ -11,7 +13,7 @@ const flash                   = require('connect-flash');
 const mongoose                = require('mongoose');
 const methodOverride          = require('method-override');
 
-// Models
+// MODELS
 const User                    = require('./models/user');
 
 // ROUTES
@@ -22,7 +24,7 @@ const reviewsRouter           = require('./routes/reviews');
 const app = express();
 
 //connecting to DB
-mongoose.connect('mongodb://localhost:27017/surf_shop', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
+mongoose.connect('mongodb://localhost:27017/surf-shop', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
   .then(() => console.log('DB Connected!'))
   .catch(err => {
     console.log(`DB Connection Error: ${err.message}`);
@@ -33,15 +35,15 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(flash());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(__dirname + "/public"));
 app.use(methodOverride('_method'));
+app.use(flash());
 
 // Configure Sessions and Passport (*Order is very important here!)
-app.set('trust proxy', 1) // trust first proxy
+//app.set('trust proxy', 1) // trust first proxy
 app.use(session({
   secret: 'lil mac',
   resave: false,
@@ -52,7 +54,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(User.createStrategy());
- 
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
