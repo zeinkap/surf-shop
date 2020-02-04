@@ -3,12 +3,22 @@
 <h1>New Post</h1>
 
 <form action="/posts" method="POST" enctype="multipart/form-data">
-    <input type="text" name="post[title]" placeholder="Title">
-    <input type="text" name="post[price]" placeholder="Price">
-    <input type="file" accept="images/*" name="images" multiple>
-    <textarea name="post[description]" placeholder="Description"></textarea>
-    <input type="text" name="post[location]" placeholder="Location">
-    
+    <div>
+        <input type="text" name="post[title]" placeholder="Title">
+    </div>
+    <div>
+        <input type="text" name="post[price]" placeholder="Price">
+    </div>
+    <div>
+        <input type="file" accept="images/*" name="images" multiple>
+    </div>
+    <div>
+        <textarea name="post[description]" placeholder="Description"></textarea>
+    </div>
+    <div>
+        <input type="text" name="post[location]" placeholder="Location">
+    </div>
+
     <input type="submit">
 </form>
 

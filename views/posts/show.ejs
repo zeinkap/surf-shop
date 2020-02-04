@@ -1,7 +1,6 @@
 <% include ../partials/header %>
 
 <style>
-    
     #map {
       width: 500px;
       height: 300px;
@@ -24,24 +23,28 @@
         text-align: center;
         font-family: 'Open Sans', sans-serif;
     }
-
 </style>
 
 <p>
     <a href="/posts">← View all posts</a> 
 </p>
 
+<h1><%= post.title %></h1>
+<div><b>Price: $</b><%= post.price %></div>
+<div><b>Description: </b><%= post.description %></div>
+<div><b>Location: </b><%= post.location %></div>
 <div>
-    <h1><%= post.title %></h1>
-    <p><b>Price: $</b><%= post.price %></p>
-    <p><b>Description: </b><%= post.description %></p>
-    <p><b>Image: </b><%= post.image %></p>
-    <p><b>Location: </b><%= post.location %></p>
+    <% post.images.forEach((image) => { %>
+        <img src="<%= image.url %>" alt="surf-image" width="250px" height="200px">
+    <% }); %>
 </div>
 
-<div id='map'></div>
-
-<a href="/posts/<%= post.id %>/edit">Edit Post</a>
+<!-- <div id='map'></div> -->
+<div>
+    <a href="/posts/<%= post.id %>/edit">
+        <button>Edit Post</button> 
+    </a>
+</div>
 
 <form action="/posts/<%= post.id %>?_method=DELETE" method="POST">
     <p>

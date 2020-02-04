@@ -11,15 +11,16 @@ const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
 const geocodingClient = mbxGeocoding({ accessToken: process.env.MAPBOX_TOKEN });
 
 module.exports = {
+    // Posts Index
     async postIndex(req, res, next) {
         let posts = await Post.find({});
         res.render('posts/index', { posts });
     },
-
+    //Posts New
     postNew(req, res, next) {
         res.render('posts/new');
     },
-
+    // Posts Create
     async postCreate(req, res, next) {
         req.body.post.images = [];
         for(const file of req.files) {
@@ -29,14 +30,13 @@ module.exports = {
                 public_id: image.public_id
             });
         }
-        let response = await geocodingClient
-        .forwardGeocode({
-            query: req.body.post.location,
-            limit: 1
-        })
-        .send();
-        req.body.post.coordinates = response.body.features[0].geometry.coordinates;
-
+        // let response = await geocodingClient
+        // .forwardGeocode({
+        //     query: req.body.post.location,
+        //     limit: 1
+        // })
+        // .send();
+        // req.body.post.coordinates = response.body.features[0].geometry.coordinates;
         let post = await Post.create(req.body.post);
         //console.log(post.coordinates);
         res.redirect(`/posts/${post.id}`);
@@ -53,6 +53,13 @@ module.exports = {
     },
 
     async postUpdate(req, res, next) {
+        // handle deletion of images
+
+        // check how many images are currently in array
+
+        // include flash message that total # of images uploaded cannot exceed 4
+
+        // handle upload of any new images
         let post = await Post.findByIdAndUpdate(req.params.id, req.body.post, { new: true });
         res.redirect(`/posts/${post.id}`);
     },

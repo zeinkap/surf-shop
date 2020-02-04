@@ -6,7 +6,7 @@ const PostSchema = new Schema({
     title: String,
     price: String,
     description: String,
-    images: [{ url: String, public_id: String }],   //url is coming from cloudinary and id is so we can edit/delete the images
+    images: [ { url: String, public_id: String } ],   //url is coming from cloudinary and id is so we can edit/delete the images
     location: String,
     coordinates: Array,
     author: {

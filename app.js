@@ -24,7 +24,7 @@ const reviewsRouter           = require('./routes/reviews');
 const app = express();
 
 //connecting to DB
-mongoose.connect('mongodb://localhost:27017/surf-shop', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
+mongoose.connect('mongodb://localhost:27017/surf-shop-mapbox', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
   .then(() => console.log('DB Connected!'))
   .catch(err => {
     console.log(`DB Connection Error: ${err.message}`);
@@ -43,7 +43,7 @@ app.use(methodOverride('_method'));
 app.use(flash());
 
 // Configure Sessions and Passport (*Order is very important here!)
-//app.set('trust proxy', 1) // trust first proxy
+app.set('trust proxy', 1) // trust first proxy
 app.use(session({
   secret: 'lil mac',
   resave: false,
