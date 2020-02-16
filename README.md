@@ -34,3 +34,5 @@
 * Require and confiure cloudinary (api key, secret, etc)
 * Update Post route
 * Added the ability to upload multiple images (up to 4) per post
+
+# added favicon

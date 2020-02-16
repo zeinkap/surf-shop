@@ -1,4 +1,4 @@
-<% include ../partials/header %>
+<%- include('../partials/header'); -%>
 
 <style>
     #map {
@@ -39,20 +39,26 @@
     <% }); %>
 </div>
 
-<!-- <div id='map'></div> -->
+<div id='map'></div>
 <div>
     <a href="/posts/<%= post.id %>/edit">
         <button>Edit Post</button> 
     </a>
 </div>
 
-<form action="/posts/<%= post.id %>?_method=DELETE" method="POST">
-    <p>
-        <input type="submit" value="Delete">
-    </p>
+<form action="/posts/<%= post.id %>?_method=DELETE" method="POST" id="postDeleteForm">
+    <div>
+        <button type="submit">Delete</button>
+    </div>
 </form>
 
 <script>
+    // alert for delete submit
+    let postDeleteForm = document.querySelector('#postDeleteForm');
+    postDeleteForm.addEventListener('submit', (event) => {
+        alert('Are you sure you want to delete this post?');
+    });
+
     // stringify turns post object into a string so it can be used in our client side
     let post = <%- JSON.stringify(post) %>;
     mapboxgl.accessToken = 'pk.eyJ1IjoiemVpbmthcCIsImEiOiJjazVoNHpzZDIwMDRjM2ptbjEwN3luN203In0.Nca_LAtI_ck6yV-OuhJU1Q';
