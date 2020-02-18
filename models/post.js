@@ -18,7 +18,8 @@ const PostSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: 'Review'
         }
-    ]
+    ],
+    createdOn: Date
 });
 
 module.exports = mongoose.model('Post', PostSchema);

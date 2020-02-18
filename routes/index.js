@@ -1,11 +1,18 @@
+require('dotenv').config();
 const express = require('express');
 const router = express.Router();
-const { postRegister, postLogin, getLogout } = require('../controllers'); // doing destructuring ES6
 const { asyncErrorHandler } = require('../middleware');
+const keyPublishable = process.env.STRIPE_API;
+const { 
+  postRegister, 
+  postLogin, 
+  getLogout, 
+  makePayment 
+} = require('../controllers'); // doing destructuring ES6
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-  res.render('index');
+  res.render('index', { title: 'Food Coma - Home'});
 });
 
 /* GET /register */
@@ -56,5 +63,13 @@ router.get('/reset/:token', (req, res, next) => {
 router.put('/reset/:token', (req, res, next) => {
   res.send('PUT /reset/:token');
 });
+
+/* Get Stripe form*/
+router.get('/payment', (req, res, next) => {
+  res.render('stripe/index', { keyPublishable, title: 'Payment' });
+});
+
+/* POST Stripe */
+router.post('/payment', makePayment)
 
 module.exports = router;

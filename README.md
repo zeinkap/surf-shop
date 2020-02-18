@@ -2,31 +2,31 @@
 
 # Set up Express with Express generator to quickly set up skeleton folder structure
 
-# Created database design on trello
+# Create database design on trello
 
 # Setup routes for index, posts and reviews
 
-# Created models for post, reviews and user
+# Create models for post, reviews and user
 
 # Setup and configured passport
 
-# Connected to MongoDB
+# Connect to MongoDB
 
-# Added header and footer ejs files in partials directory
+# Adde header and footer ejs files in partials directory
 
-# Refactored postRegister function to be async and added global errorHandler
+# Refactor postRegister function to be async and added global errorHandler
 
-# Added login/logout routes
+# Add login/logout routes
 
-# Updated routes for posts and renamed routes to follow RESTful approach
+# Update routes for posts and renamed routes to follow RESTful approach
 
-# Added geolocation feature using Mapbox API
+# Add geolocation feature using Mapbox API
 
 # Update Post Model and Controller
 
 # Update Posts show view
 
-# Uploading images 
+# Upload images feature
 * Create cloudinary account (or use existing)
 * Install cloudinary and multer
 * Cloudinary used to store images in cloud, and multer used to deal with multi form data and add additional images
@@ -35,4 +35,14 @@
 * Update Post route
 * Added the ability to upload multiple images (up to 4) per post
 
-# added favicon
+# Add favicon
+
+# Configure EJS layouts to be served for different webpages
+
+# Add flash messages
+* Update pre-route middleware to check for error or success on session
+* Update post-route error handling middleware to console.log full error and then redirect
+* Create partial for flash messages and include it in layouts
+* Write some success messages and throw some error to test it out
+
+# Add Stripe payment (legacy method)

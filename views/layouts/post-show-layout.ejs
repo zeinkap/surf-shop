@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><%= title %></title>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/post-show.css">
+    <!-- Pure CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css">
+    <!-- Favicon -->
+    <!-- <link rel="icon" href="favicon.ico" type="image/x-icon"> -->
+    <!-- Mapbox -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.6.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.6.1/mapbox-gl.css' rel='stylesheet' />
+</head>
+
+<body>
+    <% include ../partials/navbar %>
+    <% include ../partials/flash-messages %>
+    <%- body -%>
+    <script>
+        // stringify turns post object into a string so it can be used in our client side
+        let post = <%- JSON.stringify(post); %>    // done here cuz this is ejs file where local var is created and sent to post client side js
+    </script>
+    <script src="/javascripts/post-show.js"></script>
+</body>
+
+</html>

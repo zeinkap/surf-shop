@@ -1,4 +1,4 @@
-<%- include('../partials/header'); -%>
+<% layout('layouts/boilerplate') -%>
 
 <h1>All Posts</h1>
 
@@ -13,9 +13,3 @@
         <a href="/posts/<%= post.id %>">View more</a>
     </div>
 <% }); %>
-
-<p>
-    <a href="/posts/new">Add new Post</a>
-</p>
-
-<%- include('../partials/footer'); -%>
