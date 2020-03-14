@@ -19,6 +19,10 @@
     <div><input type="text" name="post[location]" placeholder="Location" value="<%= post.location %>"></div>
 
     <input type="submit">
+    <a href="/posts/<%= post.id %>">
+        <input type="button" value="Cancel">
+    </a>
+    
 </form>
 
 <script src="/javascripts/post-edit.js"></script>

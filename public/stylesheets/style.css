@@ -1,9 +1,82 @@
-body {
+* {
+  box-sizing: border-box;
+}
+
+html, body {
   margin: 0;
   padding: 0;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-a {
-  color: #00B7FF;
+.nav ul {
+  margin: 0;
+}
+
+.nav li {
+  display: inline;
+}
+
+.nav a {
+  display: inline-block;
+  padding: .5em;
+  color: whitesmoke;
+  text-decoration: none;
+}
+
+.main-nav {
+  text-align: center;
+  font-size: 1.1em;
+  font-weight: lighter;
+}
+
+.main-nav li {
+  padding: 0 5%;
+}
+
+.nav a:hover {
+  background-color: rgba(255, 255, 255, .3)
+}
+
+.main-header {
+  background-color: #24292e;
+  padding: 12px 0px;
+  line-height: 1.5;
+}
+
+.google-btn{
+  font-family: open sans,helvetica neue;
+  color: #29303b;
+  text-decoration: none;
+  font-size: 18px;
+  padding: 10px;
+  background-color: #ff5353;
+  border: 1px solid #dedfe0;
+  border-radius: 6px;
+}
+
+.alert-success {
+  padding: 20px;
+  background-color: #1edd6e; 
+  color: white;
+}
+
+.alert-error {
+  padding: 20px;
+  background-color: #f44336;
+  color: white;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
 }

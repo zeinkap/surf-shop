@@ -1,75 +1,64 @@
-require('dotenv').config();
 const express = require('express');
 const router = express.Router();
 const { asyncErrorHandler } = require('../middleware');
-const keyPublishable = process.env.STRIPE_API;
 const { 
   postRegister, 
   postLogin, 
-  getLogout, 
-  makePayment 
+  getLogout
 } = require('../controllers'); // doing destructuring ES6
 
-/* GET home page. */
+/* GET Home Page. */
 router.get('/', (req, res, next) => {
-  res.render('index', { title: 'Food Coma - Home'});
+  res.render('index', { user:req.user, title: 'Food Coma - Home' });
 });
 
-/* GET /register */
+/* GET Register Page */
 router.get('/register', (req, res, next) => {
-  res.send('GET /register');
+  res.render('users/register', { user: req.user, title: 'Register Page'});
 });
 
-/* POST /register */
-router.post('/register', asyncErrorHandler(postRegister));
+/* POST Register Page */
+router.post('/register', postRegister);
 
-/* GET /login */
+/* GET Login */
 router.get('/login', (req, res, next) => {
-  res.send('GET /login', {user: req.user, message: req.flash('error')});
+  res.render('users/login', {user: req.user});
 });
 
-/* POST /login */
+/* POST Login Page */
 router.post('/login', postLogin);
 
-/* GET /logout */
+/* Logout */
 router.get('/logout', getLogout);
 
-/* GET /profile */
-router.get('/profile', (req, res, next) => {
-  res.send('GET /profile');
-});
+// /* GET Profile */
+// router.get('/profile', (req, res, next) => {
+//   res.send('GET /profile');
+// });
 
-/* PUT /profile */
-router.put('/profile/:user_id', (req, res, next) => {
-  res.send('PUT /profile/:user_id');
-});
+// /* PUT Profile */
+// router.put('/profile/:user_id', (req, res, next) => {
+//   res.send('PUT /profile/:user_id');
+// });
 
-/* GET /forgot */
+/* GET Forgot */
 router.get('/forgot', (req, res, next) => {
   res.send('GET /forgot');
 });
 
-/* PUT /forgot-pw */
+/* PUT Forgot-pw */
 router.put('/forgot', (req, res, next) => {
   res.send('PUT /forgot');
 });
 
-/* GET /reset-pw */
+/* GET Reset-pw */
 router.get('/reset/:token', (req, res, next) => {
   res.send('GET /reset/:token');
 });
 
-/* PUT /reset-pw */
+/* PUT Reset-pw */
 router.put('/reset/:token', (req, res, next) => {
   res.send('PUT /reset/:token');
 });
-
-/* Get Stripe form*/
-router.get('/payment', (req, res, next) => {
-  res.render('stripe/index', { keyPublishable, title: 'Payment' });
-});
-
-/* POST Stripe */
-router.post('/payment', makePayment)
 
 module.exports = router;

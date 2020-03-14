@@ -4,7 +4,9 @@ const Schema = mongoose.Schema;
 
 //password and username does not need to be added cuz that will come from passport
 const UserSchema = new Schema({
+    username: String,
     email: String,
+    googleId: String,
     image: String
 });
 

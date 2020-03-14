@@ -1,0 +1,32 @@
+<% layout('layouts/boilerplate') -%>
+
+<h1>Register</h1>
+<hr>
+
+<div>
+    <form action="/register" method="POST">
+        <div>
+            <label for="username" hidden>Create username</label>
+            <input type="text" name="username" placeholder="Username" required>
+        </div>
+        <div>
+            <label for="email" hidden>Enter Email</label>
+            <input type="text" name="email" placeholder="Email" required>
+        </div>
+        <div>
+            <label for="password" hidden>Create a password</label>
+            <input type="password" name="password" placeholder="Password" maxlength="12" required>
+        </div>
+        <div>
+            <label for="image" hidden>Enter Profile Image URL</label>
+            <input type="text" name="image" placeholder="Image URL">
+        </div>
+        <div>
+            <button type="submit">Register</button>
+        </div>
+    </form>
+
+    <p>
+        Already have an account? <a href="/login">Log in here</a>
+    </p>
+</div>

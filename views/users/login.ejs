@@ -1,0 +1,33 @@
+<% layout('layouts/boilerplate') -%>
+
+<h1>Log In to Your Account</h1>
+<hr>
+
+<div>
+    <div>
+        <a class="google-btn" href="/auth/google">Continue with Google</a>
+    </div>
+
+    <br>
+
+    <form action="/login" method="POST">
+        <div>
+            <label for="username" hidden>Enter username</label>
+            <input type="text" name="username" placeholder="Username" required>
+        </div>
+        <div>
+            <label for="password" hidden>Enter password</label>
+            <input type="password" name="password" placeholder="Password" maxlength="12" required>
+        </div>
+        <div>
+            <button type="submit">Log In</button>
+        </div>
+    </form>
+
+    <p>
+        Don't have an account? <a href="/register">Register here</a>
+    </p>
+    <p>
+        <a href="#">Forgot password?</a>
+    </p>
+</div>

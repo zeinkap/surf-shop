@@ -1,7 +1,16 @@
 <% if(success && success.length) { %>
-	<h1 style="color: green;"><%= success %></h1>
+	<div class="alert-success">
+		<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+		<%= success %>
+	</div>
+	<!-- <h1 style="color: green;"><%= success %></h1> -->
 <% } %>
 
 <% if(error && error.length) { %>
-	<h1 style="color: red;"><%= error %></h1>
+	<div class="alert-error">
+		<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+		<%= error %>
+	</div>
+	<!-- <h1 style="color: red;"><%= error %></h1> -->
 <% } %>
+

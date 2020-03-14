@@ -1,12 +1,14 @@
-require('dotenv').config();
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
 const Post = require('../models/post');
+const stripePublicKey = process.env.STRIPE_PUBLIC_KEY;
 const cloudinary = require('cloudinary');
 cloudinary.config({
     cloud_name: 'zeinkap',
     api_key: '296737394658949',
     api_secret: process.env.CLOUDINARY_SECRET
 });
-
 const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
 const geocodingClient = mbxGeocoding({
     accessToken: process.env.MAPBOX_TOKEN
@@ -16,11 +18,11 @@ module.exports = {
     // Posts Index
     async postIndex(req, res, next) {
         let posts = await Post.find({});
-        res.render('posts/index', { posts, title: 'All Posts' });
+        res.render('posts/index', { posts, user: req.user, stripePublicKey, title: 'All Posts' });
     },
     //Posts New
     postNew(req, res, next) {
-        res.render('posts/new', { title: 'New Posting' });
+        res.render('posts/new', { title: 'New Posting', user: req.user });
     },
     // Posts Create
     async postCreate(req, res, next) {
@@ -43,17 +45,25 @@ module.exports = {
         req.session.success = 'Post Created!';
         res.redirect(`/posts/${post.id}`);
     },
-
+    // Posts Show
     async postShow(req, res, next) {
-        let post = await Post.findById(req.params.id);
-        res.render('posts/show', { post });
-    },
+        let post = await Post.findById(req.params.id).populate({    //populating all reviews for post
+            path: 'reviews',    
+            options: { sort: { '_id': -1}},  // sorting in desc order, so most recent ones come first
+            populate: { // populating author for each review
+                path: 'author',
+                model: 'User'
+            }
+        });
+        res.render('posts/show', { post, user: req.user, stripePublicKey });
 
+    },
+    // Post Edit
     async postEdit(req, res, next) {
         let post = await Post.findById(req.params.id);
-        res.render('posts/edit', { post, title: 'Edit Post' });
+        res.render('posts/edit', { post, title: 'Edit Post', user: req.user });
     },
-
+    // Post Update
     async postUpdate(req, res, next) {
         // find post by id
         let post = await Post.findById(req.params.id);
@@ -103,17 +113,17 @@ module.exports = {
         post.price = req.body.post.price;
         // save the updated post into the db
         post.save();
-        req.session.success = 'Post Updated!';
+        req.session.success = 'Your Post has been Updated.';
         res.redirect(`/posts/${post.id}`);
     },
-
+    // Post Delete
     async postDestroy(req, res, next) {
         let post = await Post.findById(req.params.id);
         for (const image of post.images) {
             await cloudinary.v2.uploader.destroy(image.public_id);
         }
         await post.remove();
-        req.session.error = 'Post Deleted!'
+        req.session.success = 'Your Post has been Deleted.'
         res.redirect('/posts');
     }
 }

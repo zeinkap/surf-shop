@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/post-index.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <!-- Stripe libary -->
+    <script src="//checkout.stripe.com/v2/checkout.js" defer></script>
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+
+<body>
+    <% include ../partials/navbar %>
+    <% include ../partials/flash-messages %>
+    <%- body -%>
+    
+    <script>
+        // send key from server to front-end view page to be used in front end post-index.js file
+        let stripePublicKey = <%- JSON.stringify(stripePublicKey); %>
+    </script>
+
+    <script src="/javascripts/post-index.js" defer></script>
+</body>
+
+</html>

@@ -4,7 +4,7 @@ const multer = require('multer');
 const upload = multer({'dest': 'uploads/'});
 const { asyncErrorHandler } = require('../middleware');
 const { 
-    postIndex, 
+    postIndex,
     postNew, 
     postCreate, 
     postShow, 
@@ -33,5 +33,5 @@ router.put('/:id', upload.array('images', 4), asyncErrorHandler(postUpdate));
 
 /* Destroy */
 router.delete('/:id', asyncErrorHandler(postDestroy));
-  
+
 module.exports = router;

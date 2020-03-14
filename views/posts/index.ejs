@@ -1,15 +1,36 @@
-<% layout('layouts/boilerplate') -%>
+<% layout('layouts/post-index-layout.ejs') -%>
 
-<h1>All Posts</h1>
-
-<% posts.forEach( (post) => { %>
-    <div>
-        <h2><%= post.title %></h2>
-        <p>$<%= post.price %></p>
-        <p><%= post.description %></p>
-        <p><%= post.image %></p>
-        <p><%= post.location %></p>
-
-        <a href="/posts/<%= post.id %>">View more</a>
+<section class="container content-section">
+    <h1 class="section-header">All Posts</h1>
+    <div class="shop-items">
+        <% posts.forEach( (post) => { %>
+            <div class="shop-item" data-item-id="<%= post.id %>">
+                <a href="/posts/<%= post.id %>"><img class="shop-item-image" src="<%= posts[0].images[0].url %>" alt="post-image"></a> 
+                <h2 class="shop-item-title"><%= post.title %></h2>
+                <div class="shop-item-details">
+                    <p class="shop-item-price">$<%= post.price %></p>
+                    <p><%= post.description %></p>
+                    <p><i><%= post.location %></i></p>
+                    <button class="btn btn-primary shop-item-button">Add To Cart</button>
+                </div>
+            </div>
+        <% }); %>
     </div>
-<% }); %>
+</section>
+
+<!-- Shoppping Cart -->
+<section class="container content-section">
+    <h2 class="section-header">Cart</h2>
+    <div class="cart-row">
+        <span class="cart-item cart-header cart-column">Item</span>
+        <span class="cart-price cart-header cart-column">Price</span>
+        <span class="cart-quantity cart-header cart-column">Quantity</span>
+    </div>
+    <div class="cart-items">
+    </div>
+    <div class="cart-total">
+        <strong class="cart-total-title">Total</strong>
+        <span class="cart-total-price">$0</span>
+    </div>
+    <button class="btn btn-primary btn-purchase" type="button">Purchase</button>
+</section>
