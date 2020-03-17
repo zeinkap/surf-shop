@@ -11,7 +11,6 @@ const express                 = require('express'),
       flash                   = require('connect-flash'),
       bodyParser              = require('body-parser'),
       passport                = require('passport'),
-      passportLocalMongoose   = require('passport-local-mongoose'),
       session                 = require('express-session'),
       mongoose                = require('mongoose'),
       methodOverride          = require('method-override')
@@ -21,6 +20,8 @@ const User                    = require('./models/user');
 
 // CONFIG
 const passportSetup           = require('./passport-setup');
+const seedPosts               = require('./seeds');
+// seedPosts();
 
 // ROUTES
 const index             = require('./routes/index');
@@ -50,10 +51,10 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 // set public assets directory
 app.use(express.static('public'));
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 app.use(logger('dev'));
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
@@ -80,10 +81,10 @@ app.use(function(req, res, next) {
 //   // set default page title
   res.locals.title = 'Post List';
 //   //res.locals.message = req.flash();
-  req.user = {
-    '_id' : '5e691d837c30c848fc8b886d',
-    'username' : 'zuzu'
-  }
+  // req.user = {
+  //   '_id' : '5e691d837c30c848fc8b886d',
+  //   'username' : 'zuzu'
+  // }
   res.locals.currentUser = req.user;
   //   // // set error flash message
   // res.locals.message = req.flash('error');

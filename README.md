@@ -69,10 +69,22 @@
 * User can update rating after submission
 * Add a button that enables the user to clear their rating and give zero stars
 
-## To do
-Display average rating based on all reviews on post
 
+# Add pagination to limit number of posts displayed on page
+Using faker npm
+Add page numbers
 
+# Add Seeds file to quickly add posts to DB
+Using mongoose-paginate npm
+
+# Add average rating to Post
+
+# Refactor multer and cloudinary code
+No longer storing temporary buffer files for uploaded images in our local /uploads directory
+Cloudinary will store those files
+
+# Updated local user authentication/authorization
+Add isLoggedIn middleware check
 
 
 

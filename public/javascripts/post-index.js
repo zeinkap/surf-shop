@@ -70,11 +70,9 @@ let stripeHandler = StripeCheckout.configure({
             }
             updateCartTotal();
             // if error when emptying cart
-        }).catch(function(error) {
-            console.error(error)
-        })
+        }).catch(error => console.log(error));
     }
-})
+});
 
 function purchaseClicked() {
     let priceElement = document.getElementsByClassName('cart-total-price')[0];
@@ -83,7 +81,7 @@ function purchaseClicked() {
     // open Stripe payment box
     stripeHandler.open({
         amount: price
-    })
+    });
 };
 
 function removeCartItem(event) {

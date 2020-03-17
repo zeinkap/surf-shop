@@ -5,9 +5,26 @@
 <div><b>Price: $</b><%= post.price %></div>
 <div><b>Description: </b><%= post.description %></div>
 <div><b>Location: </b><%= post.location %></div>
+<div><b>Average Rating: </b>
+    <% for(let i = 0; i < 5; i++) { %>
+        <% if(i < floorRating) { %>
+            <!-- display full star -->
+            <i class="fas fa-star"></i>
+        <% } else if((post.avgRating - i) > 0 && (post.avgRating - i) < 1) { %> 
+            <!-- display half star -->
+            <i class="fas fa-star-half-alt"></i>
+        <% } else { %>
+            <!-- display empty star -->
+            <i class="far fa-star"></i>
+        <% } %>
+    <% } %>
+    <%= `${post.avgRating} star${post.avgRating === 1 ? '' : 's'}` %>
+</div>
+
 <div>
     <% post.images.forEach(image => { %>
-        <img src="<%= image.url %>" alt="surf-image" width="250px" height="200px">
+        <!-- for image from nary do image.url for src -->
+        <img src="<%= image.url %>" alt="surf-image" width="250px" height="200px">  
     <% }); %>
 </div>
 
@@ -29,7 +46,7 @@
 <br>
 
 <!-- Stripe Payment Form -->
-<form action="/charge" method="POST" id="payment-form">
+<form action="/payment" method="POST" id="payment-form">
     <input type="hidden" name="amount" value="<%= post.price %>00">
     <script
       src="//checkout.stripe.com/v2/checkout.js"
@@ -39,18 +56,16 @@
       data-name="<%= post.title %>"
       data-description="<%= post.description %>"
       data-amount="<%= post.price %>00"
-      data-image="<%= post.images[0].url %>"
       >
     </script> 
 </form>
 
 
-<h2>Create a Review</h2>
+<h2>Leave a Review</h2>
 <form action="/posts/<%= post.id %>/reviews" method="POST">
     <textarea name="review[body]" required></textarea>
     <fieldset class="starability-basic">
         <legend>Rating:</legend>
-        <button class="clear-rating" type="button">Clear Rating</button>
         <input type="radio" id="rate0" class="input-no-rate" name="review[rating]" value="0" checked aria-label="No rating." />
         <input type="radio" id="rate1" name="review[rating]" value="1" />
         <label for="rate1" title="Terrible">1 star</label>
@@ -62,13 +77,15 @@
         <label for="rate4" title="Very good">4 stars</label>
         <input type="radio" id="rate5" name="review[rating]" value="5" />
         <label for="rate5" title="Amazing">5 stars</label>
+        <button class="clear-rating" type="button">Clear Rating</button>
     </fieldset>
 
     <input type="submit">
 </form>
 
 <!-- display all reviews -->
-<h3>Reviews</h3>
+<h3><%= `${post.reviews.length} Review${post.reviews.length === 1 ? '' : 's'}` %></h3>
+<hr>
 <% post.reviews.forEach(review => { %>
     <div>
         Author: <%= review.author.username %>
@@ -76,8 +93,9 @@
         <%= review.body %>
         <br>
         Rating: <%= review.rating %>
+
     </div>
-    <% if(review.author.equals(currentUser._id)) { %>
+    <% if(review.author.equals(currentUser._id) || review.author.equals(currentUser.googleId)) { %>
     <div>
         <button class="toggle-edit-form">Edit</button>
 
@@ -85,7 +103,6 @@
             <textarea name="review[body]" required><%= review.body %></textarea>
             <fieldset class="starability-basic">
                 <legend>Rating:</legend>
-                <button class="clear-rating" type="button">Clear Rating</button>
                 <input type="radio" id="edit-rate0" class="input-no-rate" name="review[rating]" value="0" checked aria-label="No rating." />
                 <input type="radio" id="edit-rate1" name="review[rating]" value="1" />
                 <label for="edit-rate1" title="Terrible">1 star</label>
@@ -97,6 +114,7 @@
                 <label for="edit-rate4" title="Very good">4 stars</label>
                 <input type="radio" id="edit-rate5" name="review[rating]" value="5" />
                 <label for="edit-rate5" title="Amazing">5 stars</label>
+                <button class="clear-rating" type="button">Clear Rating</button>
             </fieldset>
             
             <input type="submit" value="Update">
@@ -110,6 +128,8 @@
         <form action="/posts/<%= post.id %>/reviews/<%= review.id %>?_method=DELETE" method="POST">
             <input type="submit" value="Delete">
         </form>
+
+        <hr>
 
     </div>
 <% } %>

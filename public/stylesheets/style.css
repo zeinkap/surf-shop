@@ -34,7 +34,8 @@ html, body {
 }
 
 .nav a:hover {
-  background-color: rgba(255, 255, 255, .3)
+  background-color: rgba(255, 255, 255, .3);
+  border-radius: 5px;
 }
 
 .main-header {
@@ -52,6 +53,24 @@ html, body {
   background-color: #ff5353;
   border: 1px solid #dedfe0;
   border-radius: 6px;
+}
+
+.pagination {
+  margin: 20px 0px;
+  text-align: center;
+}
+
+.pagination a {
+  color: black;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color .3s;
+  font-size: 16px;
+}
+
+.pagination a:hover {
+  background-color: #ddd;
+  border-radius: 5px;
 }
 
 .alert-success {

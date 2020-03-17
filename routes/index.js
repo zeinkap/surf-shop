@@ -2,7 +2,9 @@ const express = require('express');
 const router = express.Router();
 const { asyncErrorHandler } = require('../middleware');
 const { 
+  getRegister,
   postRegister, 
+  getLogin,
   postLogin, 
   getLogout
 } = require('../controllers'); // doing destructuring ES6
@@ -13,20 +15,16 @@ router.get('/', (req, res, next) => {
 });
 
 /* GET Register Page */
-router.get('/register', (req, res, next) => {
-  res.render('users/register', { user: req.user, title: 'Register Page'});
-});
+router.get('/register', getRegister);
 
 /* POST Register Page */
-router.post('/register', postRegister);
+router.post('/register', asyncErrorHandler(postRegister));
 
 /* GET Login */
-router.get('/login', (req, res, next) => {
-  res.render('users/login', {user: req.user});
-});
+router.get('/login', getLogin);
 
 /* POST Login Page */
-router.post('/login', postLogin);
+router.post('/login', asyncErrorHandler(postLogin));
 
 /* Logout */
 router.get('/logout', getLogout);

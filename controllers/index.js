@@ -2,23 +2,46 @@ const User = require('../models/user');
 const passport = require('passport');
 
 module.exports = {
-  async postRegister(req, res, next) {
-    const newUser = new User({
-      username: req.body.username,
-      email: req.body.email,
-      image: req.body.image
-    });
-
-    await User.register(newUser, req.body.password);
-    // req.flash('success', 'Welcome!');
-    console.log(newUser);
-    res.redirect('/');
+  // GET Rregister
+  getRegister(req, res, next) {
+    res.render('users/register', { title: 'Register', username: '', email: '' });
   },
 
-  postLogin(req, res, next) {
-    passport.authenticate('local', {
-      successRedirect: '/posts',
-    })(req, res, next); //need to let passport know to invoke req and res
+  async postRegister(req, res, next) {
+    try {
+      const user = await User.register(new User(req.body), req.body.password);
+      req.login(user, function(err) {
+        if (err) return next(err);
+        req.session.success = `Welcome, ${user.username}!`;
+        res.redirect('/');
+      });
+    } catch(err) {
+      const { username, email } = req.body;
+      let error = err.message;
+      if (error.includes('duplicate') && error.includes('index: email_1 dup key')) {  // can check via locus
+        error = 'A user with the given email is already registered';  // rewriting error for user friendly msg
+      }
+      res.render('users/register', { title: 'Register', username, email, error })
+    }
+  },
+
+  getLogin(req, res, next) {
+    res.render('users/login', { title: 'Login' });
+  },
+
+  async postLogin(req, res, next) {
+    const { username, password } = req.body;
+    const { user, error } = await User.authenticate()(username, password);
+    if(!user && error) {
+      return next(error);
+    }
+    req.login(user, function(err) {
+      if (err) return next(err);
+      req.session.success = `Welcome back, ${username}!`;
+      const redirectUrl = req.session.redirectTo || '/';
+      delete req.session.redirectTo;
+      res.redirect(redirectUrl);
+    });
   },
 
   getLogout(req, res, next) {

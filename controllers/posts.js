@@ -1,14 +1,6 @@
-if (process.env.NODE_ENV !== 'production') {
-    require('dotenv').config();
-}
 const Post = require('../models/post');
+const { cloudinary } = require('../cloudinary');
 const stripePublicKey = process.env.STRIPE_PUBLIC_KEY;
-const cloudinary = require('cloudinary');
-cloudinary.config({
-    cloud_name: 'zeinkap',
-    api_key: '296737394658949',
-    api_secret: process.env.CLOUDINARY_SECRET
-});
 const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
 const geocodingClient = mbxGeocoding({
     accessToken: process.env.MAPBOX_TOKEN
@@ -17,7 +9,11 @@ const geocodingClient = mbxGeocoding({
 module.exports = {
     // Posts Index
     async postIndex(req, res, next) {
-        let posts = await Post.find({});
+        let posts = await Post.paginate({}, {
+            page: req.query.page || 1,
+ 		    limit: 10
+        });
+        posts.page = Number(posts.page);
         res.render('posts/index', { posts, user: req.user, stripePublicKey, title: 'All Posts' });
     },
     //Posts New
@@ -27,11 +23,10 @@ module.exports = {
     // Posts Create
     async postCreate(req, res, next) {
         req.body.post.images = [];
-        for (const file of req.files) {
-            let image = await cloudinary.v2.uploader.upload(file.path);
+        for(const file of req.files) {
             req.body.post.images.push({
-                url: image.secure_url,
-                public_id: image.public_id
+                url: file.secure_url,
+                public_id: file.public_id
             });
         }
         let response = await geocodingClient
@@ -55,8 +50,8 @@ module.exports = {
                 model: 'User'
             }
         });
-        res.render('posts/show', { post, user: req.user, stripePublicKey });
-
+        const floorRating = post.calculateAvgRating();
+        res.render('posts/show', { post, user: req.user, floorRating, stripePublicKey });
     },
     // Post Edit
     async postEdit(req, res, next) {
@@ -88,11 +83,9 @@ module.exports = {
         if (req.files) {
             // upload images
             for (const file of req.files) {
-                let image = await cloudinary.v2.uploader.upload(file.path);
-                // add images to post.images array
                 post.images.push({
-                    url: image.secure_url,
-                    public_id: image.public_id
+                    url: file.secure_url,
+                    public_id: file.public_id
                 });
             }
         }

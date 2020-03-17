@@ -1,11 +1,13 @@
 <% layout('layouts/post-index-layout.ejs') -%>
 
+<% include ../partials/paginatePosts %>
+
 <section class="container content-section">
     <h1 class="section-header">All Posts</h1>
     <div class="shop-items">
-        <% posts.forEach( (post) => { %>
+        <% posts.docs.forEach( (post) => { %>
             <div class="shop-item" data-item-id="<%= post.id %>">
-                <a href="/posts/<%= post.id %>"><img class="shop-item-image" src="<%= posts[0].images[0].url %>" alt="post-image"></a> 
+                <a href="/posts/<%= post.id %>"><img class="shop-item-image" src="<%= post.images[0].url %>" alt="post-image"></a> 
                 <h2 class="shop-item-title"><%= post.title %></h2>
                 <div class="shop-item-details">
                     <p class="shop-item-price">$<%= post.price %></p>
@@ -14,9 +16,12 @@
                     <button class="btn btn-primary shop-item-button">Add To Cart</button>
                 </div>
             </div>
+            
         <% }); %>
     </div>
 </section>
+
+<% include ../partials/paginatePosts %>
 
 <!-- Shoppping Cart -->
 <section class="container content-section">
