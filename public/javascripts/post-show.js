@@ -1,10 +1,12 @@
- // alert for delete submit
- let postDeleteForm = document.querySelector('#postDeleteForm');
- postDeleteForm.addEventListener('submit', (event) => {
-     alert('Are you sure you want to delete this post?');
- });
+// function confirmDelete() {
+//     let x = confirm("Are you sure you want to delete this post?");
+//     if (x)
+//         return true;
+//     else
+//       return false;
+// }
 
- mapboxgl.accessToken = 'pk.eyJ1IjoiemVpbmthcCIsImEiOiJjazVoNHpzZDIwMDRjM2ptbjEwN3luN203In0.Nca_LAtI_ck6yV-OuhJU1Q';
+mapboxgl.accessToken = 'pk.eyJ1IjoiemVpbmthcCIsImEiOiJjazVoNHpzZDIwMDRjM2ptbjEwN3luN203In0.Nca_LAtI_ck6yV-OuhJU1Q';
  
  const map = new mapboxgl.Map({
      container: 'map',

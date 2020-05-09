@@ -1,12 +1,12 @@
-<header class="main-header">
+<header class="main-header" id="navbar">
     <nav class="nav main-nav">
         <ul>
             <li><a href="/">Home</a></li>
             <li><a href="/posts">Posts</a></li>
-            <% if (currentUser) { %>
+            <% if(currentUser) { %>
                 <li><a href="/posts/new">New Post</a></li>
-                <li><a href="/logout">Log out</a></li>
-                <li><a href="/profile">My Profile</a></li>
+                <li><a href="/logout">Logout</a></li>
+                <li><a href="/profile">Profile</a></li>
             <% } else { %>
                 <li><a href="/register">Register</a></li>
                 <li><a href="/login">Login</a></li>

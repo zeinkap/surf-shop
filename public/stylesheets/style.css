@@ -1,11 +1,7 @@
 * {
-  box-sizing: border-box;
-}
-
-html, body {
   margin: 0;
   padding: 0;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  box-sizing: border-box;
 }
 
 .nav ul {
@@ -73,16 +69,20 @@ html, body {
   border-radius: 5px;
 }
 
-.alert-success {
-  padding: 20px;
+.color-green { 
   background-color: #1edd6e; 
+  padding: 10px;
   color: white;
+  text-align: center;
+  margin-bottom: 10px;
 }
 
-.alert-error {
-  padding: 20px;
+.color-red { 
   background-color: #f44336;
+  padding: 10px;
   color: white;
+  text-align: center;
+  margin-bottom: 10px;
 }
 
 .closebtn {

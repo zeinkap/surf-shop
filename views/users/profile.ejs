@@ -1,5 +1,47 @@
 <% layout('layouts/boilerplate') -%>
 
-<h1>Welcome to your profile <%= user.username %>!</h1>
+<h1><%= currentUser.username %>'s Profile</h1>
+<img src="<%= currentUser.image %>" alt="profile-image" />
 
-<img src="<%= user.image %>" alt="google-profile-image"/>
+<p>Recent posts:</p>
+<% posts.forEach(post => { %>
+<div>
+	<a href="/posts/<%= post.id %>"><%= post.title %></a>
+</div>
+<% }); %>
+
+<p>Update Info:</p>
+<form action="/profile?_method=PUT" method="POST">
+	<div>
+		<label for="username">Username:</label>
+		<input type="text" id="username" name="username" placeholder="Username" value="<%= currentUser.username %>"
+			autofocus required>
+	</div>
+	<div>
+		<label for="current-password">Current Password (required to update profile):</label>
+		<input type="password" id="current-password" name="currentPassword" placeholder="Current Password" required>
+	</div>
+	<div>
+		<label for="new-password">New Password:</label>
+		<input type="password" id="new-password" name="newPassword" placeholder="New Password">
+	</div>
+	<div>
+		<label for="password-confirmation">Password Confirmation:</label>
+		<input type="password" id="password-confirmation" name="passwordConfirmation"
+			placeholder="Password Confirmation">
+	</div>
+
+	<div id="validation-message"></div>
+	<div>
+		<label for="email">Email:</label>
+		<input type="email" id="email" name="email" placeholder="email" value="<%= currentUser.email %>" required>
+	</div>
+	<div>
+		<label for="image">Image:</label>
+		<input type="file" id="image" name="image">
+	</div>
+
+	<input type="submit" id="update-profile">
+</form>
+
+<script src="/javascripts/profile.js"></script>

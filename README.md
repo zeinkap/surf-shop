@@ -1,6 +1,8 @@
 # Creating a craigslist like website
 
 ## Set up Express with Express generator to quickly set up skeleton folder structure
+npm i -g express-generator
+by default the view engine is set to pug, so change to express
 
 ## Create database design on trello
 
@@ -86,6 +88,24 @@ Cloudinary will store those files
 # Updated local user authentication/authorization
 Add isLoggedIn middleware check
 
+# Add is isAuthor middleware
+Check if user is author of post prior to letting them edit/delete post
+Hide edit/delete button/routes for invalid user
 
+# Add package: npm-check-updates 
+Run ncu command to show dependencies that need to be updated
+
+# Remove bodyParser as its no longer needed with express v.4.16.0+
+
+# User can update profile
+User can change his username/password via profile page
+
+# Detect location of website's users
+Geolocation API 
+Drawbacks: It only works on secure servers (https). It is not supported on Internet Explorer 10 and below
+IP Geolocation API
+Google Maps Reverse Geocoding API to convert coordinates to physical address location
+
+# To do:
 
 

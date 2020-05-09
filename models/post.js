@@ -28,6 +28,7 @@ const PostSchema = new Schema({
 PostSchema.methods.calculateAvgRating = function() {
     let ratingsTotal = 0;
     if(this.reviews.length) {
+        // loop thru each review and add up the ratings
         this.reviews.forEach(review => {
             ratingsTotal += review.rating;
         });

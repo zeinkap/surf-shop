@@ -17,7 +17,7 @@ function ready() {
         input.addEventListener('change', quantityChanged);
     }
 
-    let addToCartButtons = document.getElementsByClassName('shop-item-button')
+    let addToCartButtons = document.getElementsByClassName('product-card-button')
     for (let i = 0; i < addToCartButtons.length; i++) {
         let button = addToCartButtons[i];
         button.addEventListener('click', addToCartClicked);
@@ -100,11 +100,11 @@ function quantityChanged(event) {
 
 function addToCartClicked(event) {
     let button = event.target;
-    let shopItem = button.parentElement.parentElement;
-    let title = shopItem.getElementsByClassName('shop-item-title')[0].innerText;
-    let price = shopItem.getElementsByClassName('shop-item-price')[0].innerText;
-    let imageSrc = shopItem.getElementsByClassName('shop-item-image')[0].src;
-    let id = shopItem.dataset.itemId;
+    let productItem = button.parentElement.parentElement;
+    let title = productItem.getElementsByClassName('product-title')[0].innerText;
+    let price = productItem.getElementsByClassName('product-price')[0].innerText;
+    let imageSrc = productItem.getElementsByClassName('product-image')[0].src;
+    let id = productItem.dataset.itemId;
     addItemToCart(title, price, imageSrc, id);
     updateCartTotal();
 };

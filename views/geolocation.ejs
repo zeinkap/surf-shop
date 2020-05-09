@@ -1,0 +1,14 @@
+<% layout('layouts/boilerplate') -%>
+
+<button id="find-me">Show my location</button><br />
+<p id="status"></p>
+<a id="map-link" target="_blank"></a>
+
+<p id="address"></p>
+
+<script>
+    // send key from server to front-end view
+    let googleMapKey = <% -JSON.stringify(googleMapKey); %>
+</script>
+
+<script src="/javascripts/geolocation.js"></script>

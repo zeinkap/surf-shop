@@ -2,30 +2,49 @@
 
 <% include ../partials/paginatePosts %>
 
-<section class="container content-section">
-    <h1 class="section-header">All Posts</h1>
-    <div class="shop-items">
-        <% posts.docs.forEach( (post) => { %>
-            <div class="shop-item" data-item-id="<%= post.id %>">
-                <a href="/posts/<%= post.id %>"><img class="shop-item-image" src="<%= post.images[0].url %>" alt="post-image"></a> 
-                <h2 class="shop-item-title"><%= post.title %></h2>
-                <div class="shop-item-details">
-                    <p class="shop-item-price">$<%= post.price %></p>
-                    <p><%= post.description %></p>
-                    <p><i><%= post.location %></i></p>
-                    <button class="btn btn-primary shop-item-button">Add To Cart</button>
-                </div>
-            </div>
-            
-        <% }); %>
+<nav class="product-filter">
+    <h1 class="section-header">All Games</h1>
+    <div class="sort">
+  
+      <div class="collection-sort">
+        <label>Filter by:</label>
+        <select>
+          <option value="/">Action</option>
+        </select>
+      </div>
+  
+      <div class="collection-sort">
+        <label>Sort by:</label>
+        <select>
+          <option value="/">Featured</option>
+        </select>
+      </div>
+  
     </div>
+  
+</nav>
+
+<section class="products">
+    <% posts.docs.forEach( (post) => { %>
+        <div class="product-card" data-item-id="<%= post.id %>">
+            <div class="product-image">
+                <a href="/posts/<%= post.id %>"><img src="https://www.elacampground.com/wp-content/uploads/2019/06/Ela-Campground-87.jpg" alt="image of product"></a>
+            </div>
+            <div class="product-info">
+                <h5 class="product-title"><%= post.title %></h5>
+                <h6 class="product-price">$<%= post.price %></h6>
+                <button class="btn-primary product-card-button">Add To Cart</button>
+            </div>
+        </div>
+        
+    <% }); %>
 </section>
 
 <% include ../partials/paginatePosts %>
 
 <!-- Shoppping Cart -->
 <section class="container content-section">
-    <h2 class="section-header">Cart</h2>
+    <h2 class="section-header">Shopping Cart</h2>
     <div class="cart-row">
         <span class="cart-item cart-header cart-column">Item</span>
         <span class="cart-price cart-header cart-column">Price</span>

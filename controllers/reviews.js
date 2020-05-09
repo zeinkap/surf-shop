@@ -20,15 +20,15 @@ module.exports = {
         //assign review to post
         post.reviews.push(review);
         //save the post
-        post.save();
+        await post.save();
         // redirect to the post
-        req.session.success = 'Review created successfully';
+        req.session.success = 'Your Review was submitted';
         res.redirect(`/posts/${post.id}`);
     },
 
     async reviewUpdate(req, res, next) {
         await Review.findByIdAndUpdate(req.params.review_id, req.body.review);
-        req.session.success = 'Your Review was updated.';
+        req.session.success = 'Your Review was updated';
         res.redirect(`/posts/${req.params.id}`);
     },
 
@@ -38,7 +38,7 @@ module.exports = {
             $pull: { reviews: req.params.review_id }    // grabbing the property we want to update 
         });
         await Review.findByIdAndRemove(req.params.review_id);
-        req.session.success = 'Your Review was deleted.';
+        req.session.success = 'Your Review was deleted';
         res.redirect(`/posts/${req.params.id}`);
     }
 }

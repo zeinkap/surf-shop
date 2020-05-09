@@ -14,12 +14,14 @@ module.exports = {
  		    limit: 10
         });
         posts.page = Number(posts.page);
-        res.render('posts/index', { posts, user: req.user, stripePublicKey, title: 'All Posts' });
+        res.render('posts/index', { posts, stripePublicKey, title: 'All Posts' });
     },
+
     //Posts New
     postNew(req, res, next) {
-        res.render('posts/new', { title: 'New Posting', user: req.user });
+        res.render('posts/new', { title: 'New Post' });
     },
+
     // Posts Create
     async postCreate(req, res, next) {
         req.body.post.images = [];
@@ -36,39 +38,45 @@ module.exports = {
             })
             .send();
         req.body.post.coordinates = response.body.features[0].geometry.coordinates;
+        req.body.post.author = req.user._id;
         let post = await Post.create(req.body.post);
-        req.session.success = 'Post Created!';
+        await post.save();
+        req.session.success = 'Post created';
         res.redirect(`/posts/${post.id}`);
     },
+
     // Posts Show
     async postShow(req, res, next) {
-        let post = await Post.findById(req.params.id).populate({    //populating all reviews for post
+        // find post and populate all its reviews
+        let post = await Post.findById(req.params.id).populate({    
             path: 'reviews',    
-            options: { sort: { '_id': -1}},  // sorting in desc order, so most recent ones come first
-            populate: { // populating author for each review
+            options: { sort: { '_id': -1}},  // sort in desc order, so most recent review come first
+            populate: { // populate author for each review
                 path: 'author',
                 model: 'User'
             }
         });
-        const floorRating = post.calculateAvgRating();
-        res.render('posts/show', { post, user: req.user, floorRating, stripePublicKey });
+        const floorRating = post.calculateAvgRating();  // function is defined in post schema
+        res.render('posts/show', { post, floorRating, stripePublicKey });
     },
+    
     // Post Edit
-    async postEdit(req, res, next) {
-        let post = await Post.findById(req.params.id);
-        res.render('posts/edit', { post, title: 'Edit Post', user: req.user });
+    postEdit(req, res, next) {
+        res.render('posts/edit', { title: 'Edit Post' }); // post already being sent from isAuthor middleware
     },
+
     // Post Update
     async postUpdate(req, res, next) {
-        // find post by id
-        let post = await Post.findById(req.params.id);
+        // destructure post
+        const { post } = res.locals;
         // check for any images for deletion
-        if (req.body.deleteImages && req.body.deleteImages.length) { // recall that images is an array, and if length 0 then falsy
-            // assign deleteImages form req.body to own var
+        // recall images is an array, and if length 0 then falsy
+        if (req.body.deleteImages && req.body.deleteImages.length) { 
+            // assign deleteImages from req.body to own var
             let deleteImages = req.body.deleteImages;
             // loop over deleteImages
             for (const public_id of deleteImages) {
-                // delete images form cloudinary
+                // delete images from cloudinary
                 await cloudinary.v2.uploader.destroy(public_id);
                 // delete image from post.images
                 for (const image of post.images) {
@@ -79,9 +87,9 @@ module.exports = {
                 }
             }
         }
-        // check if any new images selected for upload 
+        // check if any new images uploaded 
         if (req.files) {
-            // upload images
+            // upload new images
             for (const file of req.files) {
                 post.images.push({
                     url: file.secure_url,
@@ -104,19 +112,19 @@ module.exports = {
         post.title = req.body.post.title;
         post.description = req.body.post.description;
         post.price = req.body.post.price;
-        // save the updated post into the db
-        post.save();
-        req.session.success = 'Your Post has been Updated.';
+        await post.save();
+        req.session.success = `${post.title} post has been updated.`;
         res.redirect(`/posts/${post.id}`);
     },
+
     // Post Delete
     async postDestroy(req, res, next) {
-        let post = await Post.findById(req.params.id);
+        const { post } = res.locals;
         for (const image of post.images) {
             await cloudinary.v2.uploader.destroy(image.public_id);
         }
         await post.remove();
-        req.session.success = 'Your Post has been Deleted.'
+        req.session.success = `${post.title} post has been deleted.`
         res.redirect('/posts');
     }
 }
